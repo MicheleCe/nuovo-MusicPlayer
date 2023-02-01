@@ -41,13 +41,14 @@ const songSearch = (input) => {
               element.album.title,
               element.artist.picture,
               element.preview,
+              element.id,
               i
           )
       })
   })
 }
 
-function containerAlbum(songTitle, albumCover, artistName, albumtitle, artistPicture, track, i) {
+function containerAlbum(songTitle, albumCover, artistName, albumtitle, artistPicture, track, id, i) {
   like.onclick = () => {
     like.style.display = 'none'
     liked.style.display = 'block'
@@ -55,7 +56,7 @@ function containerAlbum(songTitle, albumCover, artistName, albumtitle, artistPic
 }
   return `
   <div class="classCont col-12 col-md-3 text-light">
-      <div class="card shadow my-3 position-relative border-0 bg-dark m-3" id="num${i}" >
+      <div class="card shadow my-3 position-relative border-0 bg-dark m-3" id="${id}" >
           <h5 class="card-title fw-bold m-3 text-center h-25">${songTitle}</h5>
           <button onclick='playMusic("${track}", "${songTitle}", "${artistName}")'>play</button>
           <img src=${albumCover} class="card-img-top w-100 border-3">
