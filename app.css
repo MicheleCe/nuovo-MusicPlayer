@@ -13,7 +13,7 @@
 }
 
 .info {
-  width: 205px;
+  width: 230px;
   min-width: 130px;
 }
 .info .bi-heart-fill {
@@ -51,10 +51,10 @@
     width: 200px;
   }
 }
-.navButtonPlay .player:active {
+.navButtonPlay .player-container:active .player {
   background: #2ecc71;
 }
-.navButtonPlay .player:hover {
+.navButtonPlay .player-container:hover .player {
   background: #2ecc71;
 }
 .navButtonPlay .player-button {
@@ -63,21 +63,15 @@
   border-radius: 20px;
   background: #fff;
   position: absolute;
-  right: 0px;
+  right: -8px;
   top: -3px;
   cursor: pointer;
-  pointer-events:none;
+  pointer-events: none;
 }
 
 .navButtVol {
   width: 230px;
   min-width: 130px;
-}
-.navButtVol .bi-volume-mute {
-  display: none;
-}
-.navButtVol .bi-volume-up {
-  display: none;
 }
 .navButtVol .volume-range {
   height: 5px;
@@ -93,10 +87,10 @@
   border-radius: 10px;
   position: relative;
 }
-.navButtVol .volume:active {
+.navButtVol .volume-container:active .volume {
   background: #2ecc71;
 }
-.navButtVol .volume:hover {
+.navButtVol .volume-container:hover .volume {
   background: #2ecc71;
 }
 .navButtVol .volume-button {
@@ -105,7 +99,7 @@
   border-radius: 20px;
   background: #fff;
   position: absolute;
-  right: 0px;
+  right: -8px;
   top: -3px;
   cursor: pointer;
   pointer-events: none;
