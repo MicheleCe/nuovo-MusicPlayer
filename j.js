@@ -1,15 +1,5 @@
 const API_STRIVES_SCHOOL = `https://striveschool-api.herokuapp.com/api/deezer/search`
 
-window.onload = (event) => {
-  if (!localStorage.getItem("favourites")) {
-      localStorage.setItem("favourites", "[]")
-  }
-  if (!localStorage.getItem("favourites1")) {
-      localStorage.setItem("favourites1", "[]")
-  }
-  renderFavouritesArtist()
-  renderFavouritesSongs()
-};
 
 function handleSearchOnClick (){
   document.querySelector('.containerJs1').innerHTML = " "
@@ -49,19 +39,12 @@ const songSearch = (input) => {
 }
 
 function containerAlbum(songTitle, albumCover, artistName, albumtitle, artistPicture, track, id, i) {
-  like.onclick = () => {
-    like.style.display = 'none'
-    liked.style.display = 'block'
-    handleArtistFunc(songTitle, artistName,albumCover,track,insert = 1, elIndex = -1)
-}
   return `
   <div class="classCont col-12 col-md-3 text-light">
       <div class="card shadow my-3 position-relative border-0 bg-dark m-3" id="${id}" >
           <h5 class="card-title fw-bold m-3 text-center h-25">${songTitle}</h5>
           <button onclick='playMusic("${track}", "${songTitle}", "${artistName}")'>play</button>
           <img src=${albumCover} class="card-img-top w-100 border-3">
-          <button class=" border-0 artist position-absolute badge rounded-rounded bg-success end-0 bottom-0 fs-6 m-2 text-light" onclick='handleArtistFunc("${songTitle}", "${artistName}", "${albumCover}","${track}")'>Add Album</button>
-          <button class=" border-0 song position-absolute badge rounded-rounded bg-danger start-0 bottom-0 fs-6 m-2 text-light" onclick='handleSongsFunc("${songTitle}", "${artistName}", "${albumCover}","${track}")'>Add song</button>
           <div class="d-flex">
               <div class="col-6">
                   <h5 class="card-title text-primary fw-bold my-4 text-center">${artistName}</h5>
@@ -71,117 +54,6 @@ function containerAlbum(songTitle, albumCover, artistName, albumtitle, artistPic
           </div>
       </div>
   </div>`
-}
-function handleArtistFunc(title, name, cover, track, insert = 1, elIndex = -1) {
-  let favId = `id="fav${elIndex}"`
-  if (elIndex === -1){
-      let favv = localStorage.getItem("favourites")
-      favv = JSON.parse(favv)
-      elIndex = favv.length 
-      favId = `id="fav${elIndex}"`
-      console.log(favId);
-  }
-  if (insert) {
-      addFavourite([title, name, cover, track])
-  }
-  let artists = document.querySelector('.favArtist');
-  artists.innerHTML += `
-  <div class=" classCont col-6 col-md-3 m-4 d-flex flex-wrap" ${favId}>
-    <div class="card shadow my-3 position-relative border-0">
-    <button onclick='playMusic("${track}", "${title}", "${name}")'>play</button>
-    <button class="album position-absolute badge rounded-rounded bg-primary end-0 top-0 fs-6 text-light" onclick='removeFavourite(${elIndex})'>X</button>
-      <h5 class="card-title fw-bold m-4 text-center">${title}</h5>
-      <img class="col-6 mt-3 w-100" src=${cover}>
-      <h5 class="card-title m-1 text-center">${name}</h5>
-    </div>
-  </div>
-  `
-}
-
-function handleSongsFunc(title, name, cover, track, insert = 1, elIndex = -1) {
-  let favId = `id="favour${elIndex}"`
-  if (elIndex === -1){
-      let favv = localStorage.getItem("favourites1")
-      favv = JSON.parse(favv)
-      elIndex = favv.length
-      console.log(elIndex);
-      favId = `id="favour${elIndex}"`
-  }
-  if (insert) {
-    addFavourite1([title, name, cover, track]),
-    console.log(addFavourite1());
-  } 
-  let songs = document.querySelector('.favSong');
-  songs.innerHTML += `
-  <div class=" classCont col-4 col-md-3 mx-2 d-flex" ${favId}>
-    <div class="card shadow my-3 position-relative border-0" >
-    <button onclick='playMusic("${track}", "${title}", "${name}")'>play</button>
-    <button class="album position-absolute badge rounded-rounded bg-primary ms-50 fs-6 my-5 text-light" onclick='removeFavourite1(${elIndex})'>X</button>
-      <h5 class="card-title fw-bold m-3 text-center h-25">Song Title: ${title}</h5>
-      <h5 class="card-title fw-bold m-3 text-center h-25">Artist: ${name}</h5>
-      <div class="d-flex">
-          <img class="col-6 my-4" src=${cover}>
-      </div>
-    </div>
-  </div>
-  `
-}
-function addFavourite(arr) {
-  let favourites = JSON.parse(localStorage.getItem("favourites"))
-  favourites.push(arr)
-  localStorage.setItem("favourites", JSON.stringify(favourites))
-}
-function addFavourite1(arr) {
-  let favourites = JSON.parse(localStorage.getItem("favourites1"))
-  favourites.push(arr)
-  localStorage.setItem("favourites1", JSON.stringify(favourites))
-}
-
-function renderFavouritesArtist() {
-  let fav = JSON.parse(localStorage.getItem("favourites"))
-  fav.forEach((element, i) => {
-      let title = element[0]
-      let name = element[1]
-      let cover = element[2]
-      let track = element[3]
-      console.log(track);
-      handleArtistFunc(title, name, cover, track, 0, i)
-  });
-}
-function renderFavouritesSongs() {
-  let fav = JSON.parse(localStorage.getItem("favourites1"))
-  fav.forEach((element, i) => {
-      let title = element[0]
-      let name = element[1]
-      let cover = element[2]
-      let track = element[3]
-      console.log();
-      handleSongsFunc(title, name, cover, track, 0, i)
-  });
-}
-
-function removeFavourite(elIndex) {
-  if (elIndex === -1){
-      return
-  } 
-  document.getElementById(`fav${elIndex}`).remove()
-  let session = localStorage.getItem("favourites")
-  let favs = JSON.parse(session)
-  favs.splice(elIndex, 1)
-  console.log(favs);
-  localStorage.setItem("favourites", JSON.stringify(favs))
-}
-
-function removeFavourite1(elIndex) {
-  if (elIndex === -1){
-      return
-  } 
-  document.getElementById(`favour${elIndex}`).remove()
-  let session1 = localStorage.getItem("favourites1")
-  let favs = JSON.parse(session1)
-  favs.splice(elIndex, 1)
-  console.log(favs);
-  localStorage.setItem("favourites1", JSON.stringify(favs))
 }
 
 
